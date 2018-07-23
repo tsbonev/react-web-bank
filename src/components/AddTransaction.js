@@ -1,4 +1,24 @@
 import React, { Component } from 'react'
+import {url} from '../App'
+
+const transactionAddUrl = '/transactions/save' 
+
+function  handleAddTransaction(transaction){
+    console.log(transaction)
+    
+    fetch(url + transactionAddUrl, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: transaction.userId,
+            operation: transaction.operation,
+            amount: transaction.amount,
+        })
+    })
+  }
 
 class AddTransaction extends Component {
 
@@ -16,14 +36,11 @@ class AddTransaction extends Component {
     handleSubmit(e){
 
             this.setState({newTransaction: {
-                id: this.refs.id.value,
                 userId: this.refs.userId.value,
-                username: this.refs.username.value,
                 operation: this.refs.operation.value,
-                date: this.refs.date.value,
                 amount: this.refs.amount.value
             }}, function(){
-                this.props.addTransaction(this.state.newTransaction)
+                handleAddTransaction(this.state.newTransaction)
             })
 
         console.log('Sumbitted')
@@ -41,17 +58,8 @@ class AddTransaction extends Component {
             <h3>Add transaction</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <div>
-                    <label>Transaction id</label>
-                    <input required type="number" ref="id"/>
-                    <br/>
-                    <label>Username</label>
-                    <input required type="text" ref="username"/>
-                    <br/>
                     <label>User id</label>
                     <input required type="number" ref="userId"/>
-                    <br/>
-                    <label>Date</label>
-                    <input required type="text" ref="date"/>
                     <br/>
                     <label>Amount</label>
                     <input required type="number" ref="amount"/>

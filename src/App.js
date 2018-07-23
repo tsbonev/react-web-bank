@@ -1,59 +1,28 @@
-import React, { Component } from 'react';
-import './App.css';
-import Transactions from './components/Transactions';
-import AddTransaction from './components/AddTransaction';
+import React, { Component } from 'react'
+import {Switch, Route} from 'react-router-dom'
+import './App.css'
+import Transactions from './components/Transactions'
+import AddTransaction from './components/AddTransaction'
+import RegisterUser from './components/RegisterUser'
+import ViewUser from './components/ViewUser'
+import Login from './components/Login';
 
-const url = 'http://localhost:8080/transactions/1'
-const postUrl = 'http://localhost:8080/transactions/save'
+//export const url = 'http://localhost:8080'
+export const url = 'https://datasource-bank-demo-dot-sacred-union-210613.appspot.com'
 
 class App extends Component {
 
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: [],
-    };
-  }
-
-  componentDidMount() {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {console.log(data);
-         this.setState({data});})
-  }
-
-  handleAddTransaction(transaction){
-
-    console.log(transaction)
-    console.log(postUrl)
-    fetch(postUrl, {
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-    id: transaction.id,
-    operation: transaction.operation,
-    userId: transaction.userId,
-    date: transaction.data,
-    amount: transaction.amount,
-    username: transaction.username
-  })
-})
-
-  }
-
   render() {
     return (
-      <div>
-      <Transactions transactions={this.state.data}/>
-      <AddTransaction addTransaction={this.handleAddTransaction}/>
-      </div>
+      <Switch>
+        <Route exact path='/transactions' component={Transactions}/>
+        <Route path='/add' component={AddTransaction}/>
+        <Route path='/register' component={RegisterUser}/>
+        <Route path='/user/:username' component={ViewUser}/>
+        <Route path='/login' component={Login}/>
+      </Switch>
     );
   }
 }
 
-export default App;
+export default App
