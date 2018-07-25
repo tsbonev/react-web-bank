@@ -4,7 +4,7 @@ import { redirectTo } from '../App'
 
 const registerUrl = '/register' 
 
-class RegisterUser extends Component {
+class Register extends Component {
 
 
     constructor(){
@@ -70,4 +70,4 @@ class RegisterUser extends Component {
     }
 }
 
-export default RegisterUser
+export default Register

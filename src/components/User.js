@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 const userUrl = "/user"
 
-class ViewUser extends Component {
+class User extends Component {
 
     constructor(props) {
         super(props);
@@ -15,14 +15,15 @@ class ViewUser extends Component {
     componentDidMount() {
         fetch(userUrl)
           .then(response => response.json())
-          .then(data => {console.log(data);
-             this.setState({data});})
+          .then(data => {
+             this.setState({data})
+            })
       }
 
     render() {
 
         return (
-            <div className='ViewUser'>
+            <div className='User'>
                 <span>ID: {this.state.data.id}</span><br/>
                 <span>Username: {this.state.data.username}</span>
             </div>
@@ -30,4 +31,4 @@ class ViewUser extends Component {
     }
 }
 
-export default ViewUser
+export default User

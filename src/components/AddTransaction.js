@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { handleReturn } from '../App'
 import { redirectTo } from '../App'
 
-const transactionAddUrl = '/transactions/save'  
+const transactionAddUrl = '/transactions'  
 
 class AddTransaction extends Component {
 

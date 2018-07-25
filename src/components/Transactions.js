@@ -17,8 +17,9 @@ class Transactions extends Component {
     componentDidMount() {
         fetch(transactionUrl)
           .then(response => response.json())
-          .then(data => {console.log(data);
-             this.setState({data});})
+          .then(data => {
+             this.setState({data})
+            })
     }
 
     render() {

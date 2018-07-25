@@ -8,16 +8,25 @@ class UsersInSystem extends Component {
         super(props)
 
         this.state = {
-            active: {},
+            active: 0,
+            update: {}
           };
     }
 
     componentDidMount() {
         fetch(activeUrl)
-          .then(response => response.json())
-          .then(active => {
-              console.log(active)
-             this.setState({active: active});})
+          .then(response => response.json()
+                .then(active => {
+                    console.log(active)
+                    this.setState({active: active})
+                    }
+                )
+            )
+    }
+
+    componentWillReceiveProps(props){
+        this.componentDidMount()
+        this.setState({update: {}})
     }
 
     render() {

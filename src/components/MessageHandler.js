@@ -28,6 +28,8 @@ class MessageHandler extends Component {
             case 202:
                 message = <SuccessMsg message={this.state.messageText}/>
                 break;
+            case 300:
+            case 301:
             case 302:
                 message = <InfoMsg message={this.state.messageText}/>
                 break;
