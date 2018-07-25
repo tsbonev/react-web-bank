@@ -8,14 +8,14 @@ import ViewUser from './components/ViewUser'
 import Login from './components/Login';
 
 //export const url = 'http://localhost:8080'
-export const url = 'https://datasource-bank-demo-dot-sacred-union-210613.appspot.com'
+//export const url = 'https://datasource-bank-demo-dot-sacred-union-210613.appspot.com'
 
 class App extends Component {
 
   render() {
     return (
       <Switch>
-        <Route exact path='/transactions' component={Transactions}/>
+        <Route path='/transactions' component={Transactions}/>
         <Route path='/add' component={AddTransaction}/>
         <Route path='/register' component={RegisterUser}/>
         <Route path='/user/:username' component={ViewUser}/>

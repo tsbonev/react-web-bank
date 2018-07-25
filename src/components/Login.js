@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {url} from '../App'
 
 const loginUrl = '/login'
 
@@ -19,10 +18,9 @@ function handleReturn(response){
 function  handleLogin(login){
     console.log(login)
     
-    fetch(url + loginUrl, {
+    fetch(loginUrl, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({

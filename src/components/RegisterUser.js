@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import {url} from '../App'
 
 const registerUrl = '/register'
 
 function  handleRegister(registration){
     console.log(registration)
     
-    fetch(url + registerUrl, {
+    fetch(registerUrl, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({

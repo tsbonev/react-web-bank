@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap';
 import TransactionItem from './TransactionItem';
-import { url } from '../App'
 
-const transactionUrl = '/transactions/'
+const transactionUrl = '/transactions'
 
 class Transactions extends Component {
 
@@ -16,8 +15,7 @@ class Transactions extends Component {
       }
 
     componentDidMount() {
-        console.log(url + transactionUrl)
-        fetch(url + transactionUrl)
+        fetch(transactionUrl)
           .then(response => response.json())
           .then(data => {console.log(data);
              this.setState({data});})

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {url} from '../App'
 
 const userUrl = "/user/"
 
@@ -14,8 +13,7 @@ class ViewUser extends Component {
       }
 
     componentDidMount() {
-        console.log(url + userUrl + this.props.match.params.username)
-        fetch(url + userUrl + this.props.match.params.username)
+        fetch(userUrl + this.props.match.params.username)
           .then(response => response.json())
           .then(data => {console.log(data);
              this.setState({data});})

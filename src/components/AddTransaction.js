@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
-import {url} from '../App'
 
 const transactionAddUrl = '/transactions/save' 
 
 function  handleAddTransaction(transaction){
     console.log(transaction)
     
-    fetch(url + transactionAddUrl, {
+    fetch(transactionAddUrl, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            userId: transaction.userId,
             operation: transaction.operation,
             amount: transaction.amount,
         })
@@ -36,7 +33,6 @@ class AddTransaction extends Component {
     handleSubmit(e){
 
             this.setState({newTransaction: {
-                userId: this.refs.userId.value,
                 operation: this.refs.operation.value,
                 amount: this.refs.amount.value
             }}, function(){
@@ -58,9 +54,6 @@ class AddTransaction extends Component {
             <h3>Add transaction</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <div>
-                    <label>User id</label>
-                    <input required type="number" ref="userId"/>
-                    <br/>
                     <label>Amount</label>
                     <input required type="number" ref="amount"/>
                     <br/>
