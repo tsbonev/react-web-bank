@@ -2,35 +2,44 @@ import React, { Component } from 'react'
 
 const loginUrl = '/login'
 
-function handleReturn(response){
-
-    if(response.ok){
-        console.log('Success!')
-    }
-    else if (response.state === 400){
-        console.log('Invalid login!')
-    }
-    else{
-        console.log('Something went wrong!')
-    }
-}
-
-function  handleLogin(login){
-    console.log(login)
-    
-    fetch(loginUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: login.username,
-            password: login.password
-        })
-    }).then(response => handleReturn(response))
-  }
-  
 class Login extends Component {
+
+    handleReturn = (response) => {
+        if(response.ok){
+            this.props.callback("Logged in!", response.status)
+            return true
+        }
+        else if (response.status === 401){
+            this.props.callback("User not registered!", response.status)
+            return false
+        }
+        else{
+            this.props.callback("Something went wrong!", response.status)
+            return true
+        }
+    }
+    
+    handleLogin = (login) => {   
+        fetch(loginUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: login.username,
+                password: login.password
+            })
+        }).then(response => {
+            if(this.handleReturn(response)){
+                console.log("Should redirect")
+                this.redirectTo('/')
+            }
+            else{
+                console.log("Should refresh")
+                this.redirectTo('/login')
+            }
+        })
+      }
 
     constructor(){
         super()
@@ -39,16 +48,19 @@ class Login extends Component {
         }
     }
 
+    redirectTo(path){
+        console.log(this.props)
+        this.props.history.push(path)
+    }
+
     handleSubmit(e){
 
         this.setState({newLogin: {
             username: this.refs.username.value,
             password: this.refs.password.value
         }}, function(){
-            handleLogin(this.state.newLogin)
+            this.handleLogin(this.state.newLogin)
         })
-
-    console.log('Sumbitted')
     e.preventDefault()
     }
 

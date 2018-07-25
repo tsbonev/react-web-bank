@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const userUrl = "/user/"
+const userUrl = "/user"
 
 class ViewUser extends Component {
 
@@ -13,7 +13,7 @@ class ViewUser extends Component {
       }
 
     componentDidMount() {
-        fetch(userUrl + this.props.match.params.username)
+        fetch(userUrl)
           .then(response => response.json())
           .then(data => {console.log(data);
              this.setState({data});})
@@ -23,8 +23,8 @@ class ViewUser extends Component {
 
         return (
             <div className='ViewUser'>
-                <span>{this.state.data.id}</span><br/>
-                <span>{this.state.data.username}</span>
+                <span>ID: {this.state.data.id}</span><br/>
+                <span>Username: {this.state.data.username}</span>
             </div>
         )
     }
