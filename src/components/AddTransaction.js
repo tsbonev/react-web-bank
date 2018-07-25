@@ -1,21 +1,8 @@
 import React, { Component } from 'react'
+import { handleReturn } from '../App'
+import { redirectTo } from '../App'
 
-const transactionAddUrl = '/transactions/save' 
-
-function  handleAddTransaction(transaction){
-    console.log(transaction)
-    
-    fetch(transactionAddUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            operation: transaction.operation,
-            amount: transaction.amount,
-        })
-    })
-  }
+const transactionAddUrl = '/transactions/save'  
 
 class AddTransaction extends Component {
 
@@ -25,6 +12,30 @@ class AddTransaction extends Component {
             newTransaction:{}
         }
     }
+
+    handleAddTransaction = (transaction) => {
+        console.log(transaction)
+        
+        fetch(transactionAddUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                operation: transaction.operation,
+                amount: transaction.amount,
+            })
+        }).then(response => {
+
+            if(handleReturn(response
+            , "Transaction successful!", "Transaction could not be executed!", this)){
+                redirectTo('/', this)
+            }
+            else{
+                redirectTo('/add', this)
+            }
+        })
+      }
 
     static defaultProps = {
         operations: ["DEPOSIT", "WITHDRAW"]
@@ -36,7 +47,7 @@ class AddTransaction extends Component {
                 operation: this.refs.operation.value,
                 amount: this.refs.amount.value
             }}, function(){
-                handleAddTransaction(this.state.newTransaction)
+                this.handleAddTransaction(this.state.newTransaction)
             })
 
         console.log('Sumbitted')

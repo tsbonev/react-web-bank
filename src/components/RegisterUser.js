@@ -1,21 +1,8 @@
 import React, { Component } from 'react'
+import { handleReturn } from '../App'
+import { redirectTo } from '../App'
 
-const registerUrl = '/register'
-
-function  handleRegister(registration){
-    console.log(registration)
-    
-    fetch(registerUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: registration.username,
-            password: registration.password
-        })
-    })
-  }
+const registerUrl = '/register' 
 
 class RegisterUser extends Component {
 
@@ -27,14 +14,35 @@ class RegisterUser extends Component {
         }
     }
 
+    handleRegister = (registration) => {
+        fetch(registerUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: registration.username,
+                password: registration.password
+            })
+        }).then(response => {
+
+            if(handleReturn(response
+            , "User registered!", "Username taken!", this)){
+                redirectTo('/', this)
+            }
+            else{
+                redirectTo('/register', this)
+            }
+        })
+    }
+
     handleSubmit(e){
 
         this.setState({newRegistration: {
             username: this.refs.username.value,
             password: this.refs.password.value
         }}, function(){
-            handleRegister(this.state.newRegistration)
-            this.props.history.push('/');
+            this.handleRegister(this.state.newRegistration)
         })
 
     console.log('Sumbitted')

@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
+import { handleReturn } from '../App'
+import { redirectTo } from '../App'
 
 const loginUrl = '/login'
 
 class Login extends Component {
 
-    handleReturn = (response) => {
-        if(response.ok){
-            this.props.callback("Logged in!", response.status)
-            return true
-        }
-        else if (response.status === 401){
-            this.props.callback("User not registered!", response.status)
-            return false
-        }
-        else{
-            this.props.callback("Something went wrong!", response.status)
-            return true
+    constructor(){
+        super()
+        this.state = {
+            newLogin:{}
         }
     }
     
@@ -30,31 +24,18 @@ class Login extends Component {
                 password: login.password
             })
         }).then(response => {
-            if(this.handleReturn(response)){
-                console.log("Should redirect")
-                this.redirectTo('/')
+
+            if(handleReturn(response
+            , "User logged in!", "User not found!", this)){
+                redirectTo('/', this)
             }
             else{
-                console.log("Should refresh")
-                this.redirectTo('/login')
+                redirectTo('/login', this)
             }
         })
       }
 
-    constructor(){
-        super()
-        this.state = {
-            newLogin:{}
-        }
-    }
-
-    redirectTo(path){
-        console.log(this.props)
-        this.props.history.push(path)
-    }
-
     handleSubmit(e){
-
         this.setState({newLogin: {
             username: this.refs.username.value,
             password: this.refs.password.value

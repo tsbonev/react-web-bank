@@ -11,6 +11,25 @@ import MessageHandler from './components/MessageHandler';
 //export const url = 'http://localhost:8080'
 //export const url = 'https://datasource-bank-demo-dot-sacred-union-210613.appspot.com'
 
+export const handleReturn = (response, successMessage, failMessage, context) => {
+  if(response.ok){
+      context.props.callback(successMessage, response.status)
+      return true
+  }
+  else if (response.status >= 400 && response.status <= 499){
+      context.props.callback(failMessage, response.status)
+      return false
+  }
+  else{
+      context.props.callback("Something went wrong!", response.status)
+      return true
+  }
+}
+
+export const redirectTo = (path, context) => {
+  context.props.history.push(path)
+}
+
 class App extends Component {
 
   constructor(props){
@@ -26,13 +45,6 @@ class App extends Component {
     this.setState({messageText: messageText, statusCode: statusCode})
   }
   
-  LoginPage = (props) => {
-    return(
-        <Login callback={this.callBackFromChild}/>
-    );
-  }
-  
-
   render() {
     return (
       <div>
@@ -40,10 +52,14 @@ class App extends Component {
         statusCode={this.state.statusCode}/>
           <Switch>
             <Route path='/transactions' component={Transactions}/>
-            <Route path='/add' component={AddTransaction}/>
-            <Route path='/register' component={RegisterUser}/>
             <Route path='/user' component={ViewUser}/>
-            <Route path='/login' component={this.LoginPage} />
+
+            <Route path='/add' 
+            render={(props) => <AddTransaction callback={this.callBackFromChild} {...props}/>}/>
+            <Route path='/register'
+            render={(props) => <RegisterUser callback={this.callBackFromChild} {...props}/>}/>
+            <Route path='/login'
+             render={(props) => <Login callback={this.callBackFromChild} {...props}/>} />
         </Switch>
       </div>
     );
