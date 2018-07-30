@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { Cookies } from 'react-cookie';
 
 const activeUrl = '/active'
+
+const cookies = new Cookies()
 
 class UsersInSystem extends Component {
 
@@ -14,7 +17,11 @@ class UsersInSystem extends Component {
     }
 
     componentDidMount() {
-        fetch(activeUrl)
+        fetch(activeUrl, {
+            headers: {
+                'SID': cookies.get('SID')
+            }
+        })
           .then(response => response.json()
                 .then(active => {
                     console.log(active)

@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { Table } from 'react-bootstrap';
-import TransactionItem from './TransactionItem';
+import { Table } from 'react-bootstrap'
+import TransactionItem from './TransactionItem'
+import { Cookies } from 'react-cookie';
 
 const transactionUrl = '/transactions'
+
+const cookies = new Cookies()
 
 class Transactions extends Component {
 
@@ -15,7 +18,11 @@ class Transactions extends Component {
       }
 
     componentDidMount() {
-        fetch(transactionUrl)
+        fetch(transactionUrl, {
+            headers: {
+                'SID': cookies.get('SID')
+            }
+        })
           .then(response => response.json())
           .then(data => {
              this.setState({data})

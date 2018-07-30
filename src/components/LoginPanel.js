@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import UsersInSystem from './UsersInSystem';
+import { Cookies } from 'react-cookie';
 
 const userUrl = '/user'
+
+const cookies = new Cookies()
 
 class LoginPanel extends Component {
 
@@ -16,7 +19,11 @@ class LoginPanel extends Component {
     }
 
     componentDidMount() {
-        fetch(userUrl)
+        fetch(userUrl, {
+            headers: {
+                'SID': cookies.get('SID')
+            }
+        })
             .then(response =>
                 response.json()
                 .then(user => {

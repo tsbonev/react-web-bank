@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { handleReturn } from '../App'
 import { redirectTo } from '../App'
+import { Cookies } from 'react-cookie';
 
 const transactionAddUrl = '/transactions'  
+
+const cookies = new Cookies()
 
 class AddTransaction extends Component {
 
@@ -19,6 +22,7 @@ class AddTransaction extends Component {
         fetch(transactionAddUrl, {
             method: 'POST',
             headers: {
+                'SID': cookies.get('SID'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({

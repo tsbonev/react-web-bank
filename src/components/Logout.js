@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 import { handleReturn } from '../App'
 import { redirectTo } from '../App'
+import { Cookies } from 'react-cookie';
 
 const logoutUrl = '/logout'
+
+const cookies = new Cookies()
 
 class Logout extends Component {
 
     componentDidMount(){
         fetch(logoutUrl, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'SID': cookies.get('SID')
+            }
         }).then(response => 
             response.json()
                 .then( response => {
