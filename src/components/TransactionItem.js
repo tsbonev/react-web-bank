@@ -16,7 +16,17 @@ class TransactionItem extends Component {
                 {this.props.transaction.userId}
             </td>
             <td>
-                {this.props.transaction.date}
+                {this.props.transaction.date.date.year
+                + '.'
+                + this.props.transaction.date.date.month
+                + '.'
+                + this.props.transaction.date.date.day
+                + ' '
+                + this.props.transaction.date.time.hour
+                + ':'
+                + this.props.transaction.date.time.minute
+                + ':'
+                + this.props.transaction.date.time.second}
             </td>
             <td>
                 {this.props.transaction.operation}
