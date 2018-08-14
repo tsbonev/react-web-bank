@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class TransactionItem extends Component {
 
     render() {
-
+        
         return (
             <tr>
             <td>

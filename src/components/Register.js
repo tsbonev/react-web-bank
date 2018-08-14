@@ -22,6 +22,7 @@ class Register extends Component {
             },
             body: JSON.stringify({
                 username: registration.username,
+                email: registration.email,
                 password: registration.password
             })
         }).then(response => {
@@ -40,6 +41,7 @@ class Register extends Component {
 
         this.setState({newRegistration: {
             username: this.refs.username.value,
+            email: this.refs.email.value,
             password: this.refs.password.value
         }}, function(){
             this.handleRegister(this.state.newRegistration)
@@ -58,6 +60,9 @@ class Register extends Component {
                 <div>
                     <label>Username</label>
                     <input required type="text" ref="username"/>
+                    <br/>
+                    <label>Email</label>
+                    <input required type="text" ref="email"/>
                     <br/>
                     <label>Password</label>
                     <input required type="password" ref="password"/>
